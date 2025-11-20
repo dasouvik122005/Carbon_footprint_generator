@@ -1,7 +1,19 @@
 // Download Extension Function
 function downloadExtension() {
-  // Direct download of the ZIP file
-  window.location.href = '/download/extension';
+  // For GitHub Pages: direct download of the ZIP file
+  // For local/backend: use Flask route
+  const isGitHubPages = window.location.hostname.includes('github.io');
+  const downloadUrl = isGitHubPages 
+    ? 'ecotrace-extension.zip'  // Direct file on GitHub Pages
+    : '/download/extension';     // Flask route for local hosting
+  
+  // Create temporary link and trigger download
+  const link = document.createElement('a');
+  link.href = downloadUrl;
+  link.download = 'ecotrace-extension.zip';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
   
   // Show installation instructions after download starts
   setTimeout(() => {
