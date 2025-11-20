@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EcoTrace - Carbon Footprint</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      width: 400px;
+      min-height: 500px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 50%, #8b5cf6 100%);
+      color: #1f2937;
+    }
+
+    .header {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 16px;
+      text-align: center;
+      border-bottom: 2px solid #10b981;
+    }
+
+    .header h1 {
+      font-size: 20px;
+      color: #10b981;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .header p {
+      font-size: 12px;
+      color: #6b7280;
+      margin-top: 4px;
+    }
+
+    .container {
+      padding: 16px;
+      background: white;
+    }
+
+    .current-product {
+      background: #f3f4f6;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+    }
+
+    .current-product h3 {
+      font-size: 14px;
+      color: #374151;
+      margin-bottom: 8px;
+    }
+
+    .product-info {
+      font-size: 12px;
+      color: #6b7280;
+      margin-bottom: 4px;
+    }
+
+    .calculate-btn {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-bottom: 16px;
+      transition: transform 0.2s;
+    }
+
+    .calculate-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .calculate-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .result {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: white;
+      padding: 16px;
+      border-radius: 12px;
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    .result-value {
+      font-size: 32px;
+      font-weight: 700;
+      margin: 8px 0;
+    }
+
+    .result-label {
+      font-size: 12px;
+      opacity: 0.9;
+    }
+
+    .breakdown {
+      background: #f9fafb;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+    }
+
+    .breakdown-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .breakdown-item:last-child {
+      border-bottom: none;
+    }
+
+    .breakdown-label {
+      font-size: 13px;
+      color: #4b5563;
+    }
+
+    .breakdown-value {
+      font-size: 13px;
+      font-weight: 600;
+      color: #10b981;
+    }
+
+    .history {
+      max-height: 200px;
+      overflow-y: auto;
+    }
+
+    .history-item {
+      padding: 10px;
+      background: #f9fafb;
+      margin-bottom: 8px;
+      border-radius: 6px;
+      font-size: 12px;
+    }
+
+    .history-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 4px;
+    }
+
+    .history-name {
+      font-weight: 600;
+      color: #374151;
+    }
+
+    .history-emission {
+      font-weight: 700;
+      color: #10b981;
+    }
+
+    .history-details {
+      color: #6b7280;
+      font-size: 11px;
+    }
+
+    .tabs {
+      display: flex;
+      border-bottom: 2px solid #e5e7eb;
+      margin-bottom: 16px;
+    }
+
+    .tab {
+      flex: 1;
+      padding: 12px;
+      text-align: center;
+      background: none;
+      border: none;
+      color: #6b7280;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -2px;
+      transition: all 0.2s;
+    }
+
+    .tab.active {
+      color: #10b981;
+      border-bottom-color: #10b981;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .stat-card {
+      background: #f3f4f6;
+      padding: 12px;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 24px;
+      font-weight: 700;
+      color: #10b981;
+      margin-bottom: 4px;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      color: #6b7280;
+    }
+
+    .export-btn {
+      width: 100%;
+      padding: 10px;
+      background: #3b82f6;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 12px;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 32px 16px;
+      color: #9ca3af;
+    }
+
+    .empty-state-icon {
+      font-size: 48px;
+      margin-bottom: 8px;
+    }
+
+    .form-group {
+      margin-bottom: 12px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 4px;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 8px;
+      border: 2px solid #e5e7eb;
+      border-radius: 6px;
+      font-size: 13px;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: #10b981;
+    }
+
+    .icon {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>🌱 EcoTrace</h1>
+    <p>Carbon Footprint Analyzer</p>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" data-tab="calculator">Calculator</button>
+    <button class="tab" data-tab="history">History</button>
+    <button class="tab" data-tab="stats">Stats</button>
+  </div>
+
+  <div class="container">
+    <!-- Calculator Tab -->
+    <div class="tab-content active" id="calculator">
+      <div id="currentProduct" class="current-product" style="display: none;">
+        <h3>Detected Product</h3>
+        <div class="product-info" id="productName">-</div>
+        <div class="product-info" id="productCategory">-</div>
+      </div>
+
+      <div class="form-group">
+        <label>Product Category</label>
+        <select id="category">
+          <option value="electronics">Electronics</option>
+          <option value="clothing">Clothing</option>
+          <option value="books">Books</option>
+          <option value="food-fresh">Fresh Food</option>
+          <option value="food-processed">Processed Food</option>
+          <option value="furniture">Furniture</option>
+          <option value="toys">Toys</option>
+          <option value="cosmetics">Cosmetics</option>
+          <option value="sports">Sports Equipment</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Weight (kg)</label>
+        <input type="number" id="weight" value="0.5" step="0.1" min="0">
+      </div>
+
+      <div class="form-group">
+        <label>Delivery Distance (km)</label>
+        <input type="number" id="distance" value="50" step="10" min="0">
+      </div>
+
+      <div class="form-group">
+        <label>Transport Mode</label>
+        <select id="transport">
+          <option value="van">Delivery Van</option>
+          <option value="bike">Bicycle/E-bike</option>
+          <option value="truck">Freight Truck</option>
+          <option value="air">Air Freight</option>
+          <option value="train">Rail Transport</option>
+          <option value="ship">Sea Freight</option>
+        </select>
+      </div>
+
+      <button class="calculate-btn" id="calculateBtn">Calculate Carbon Footprint</button>
+
+      <div id="result" style="display: none;">
+        <div class="result">
+          <div class="result-label">Total Carbon Footprint</div>
+          <div class="result-value"><span id="totalEmission">0</span> kg CO₂e</div>
+          <div class="result-label">≈ <span id="treeOffset">0</span> trees needed annually</div>
+        </div>
+
+        <div class="breakdown">
+          <div class="breakdown-item">
+            <span class="breakdown-label">🏭 Product Manufacturing</span>
+            <span class="breakdown-value"><span id="productEmission">0</span> kg</span>
+          </div>
+          <div class="breakdown-item">
+            <span class="breakdown-label">📦 Packaging</span>
+            <span class="breakdown-value"><span id="packagingEmission">0</span> kg</span>
+          </div>
+          <div class="breakdown-item">
+            <span class="breakdown-label">🚚 Delivery</span>
+            <span class="breakdown-value"><span id="deliveryEmission">0</span> kg</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- History Tab -->
+    <div class="tab-content" id="history">
+      <div id="historyList" class="history"></div>
+      <div id="historyEmpty" class="empty-state">
+        <div class="empty-state-icon">📊</div>
+        <p>No calculations yet</p>
+        <p style="font-size: 11px;">Calculate your first product!</p>
+      </div>
+      <button class="export-btn" id="exportBtn">Export Data (CSV)</button>
+    </div>
+
+    <!-- Stats Tab -->
+    <div class="tab-content" id="stats">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-value" id="totalCalculations">0</div>
+          <div class="stat-label">Calculations</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="totalEmissions">0</div>
+          <div class="stat-label">Total kg CO₂e</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="avgEmission">0</div>
+          <div class="stat-label">Avg per Product</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="treesNeeded">0</div>
+          <div class="stat-label">Trees Needed</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

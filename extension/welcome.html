@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome to EcoTrace</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 50%, #8b5cf6 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 800px;
+      background: white;
+      border-radius: 24px;
+      padding: 48px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .logo {
+      font-size: 64px;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-size: 36px;
+      color: #10b981;
+      margin-bottom: 12px;
+    }
+
+    .tagline {
+      font-size: 18px;
+      color: #6b7280;
+    }
+
+    .features {
+      margin: 40px 0;
+    }
+
+    .feature {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 24px;
+      padding: 20px;
+      background: #f9fafb;
+      border-radius: 12px;
+      transition: transform 0.2s;
+    }
+
+    .feature:hover {
+      transform: translateX(4px);
+    }
+
+    .feature-icon {
+      font-size: 32px;
+      margin-right: 16px;
+      flex-shrink: 0;
+    }
+
+    .feature-content h3 {
+      font-size: 18px;
+      color: #374151;
+      margin-bottom: 8px;
+    }
+
+    .feature-content p {
+      font-size: 14px;
+      color: #6b7280;
+      line-height: 1.6;
+    }
+
+    .platforms {
+      margin: 40px 0;
+      padding: 24px;
+      background: #ecfdf5;
+      border-radius: 12px;
+      border: 2px solid #10b981;
+    }
+
+    .platforms h3 {
+      font-size: 20px;
+      color: #059669;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+
+    .platform-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+    }
+
+    .platform-tag {
+      background: white;
+      color: #059669;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 600;
+      border: 2px solid #10b981;
+    }
+
+    .cta {
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    .cta-button {
+      display: inline-block;
+      padding: 16px 32px;
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: white;
+      text-decoration: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      transition: transform 0.2s;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-2px);
+    }
+
+    .instructions {
+      margin-top: 40px;
+      padding: 24px;
+      background: #fef3c7;
+      border-radius: 12px;
+      border-left: 4px solid #f59e0b;
+    }
+
+    .instructions h3 {
+      font-size: 18px;
+      color: #92400e;
+      margin-bottom: 12px;
+    }
+
+    .instructions ol {
+      margin-left: 20px;
+      color: #78350f;
+    }
+
+    .instructions li {
+      margin-bottom: 8px;
+      line-height: 1.6;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 40px;
+      padding-top: 24px;
+      border-top: 2px solid #e5e7eb;
+      color: #9ca3af;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="logo">🌱</div>
+      <h1>Welcome to EcoTrace!</h1>
+      <p class="tagline">Your Carbon Footprint Shopping Companion</p>
+    </div>
+
+    <div class="features">
+      <div class="feature">
+        <div class="feature-icon">🔍</div>
+        <div class="feature-content">
+          <h3>Automatic Product Detection</h3>
+          <p>EcoTrace automatically detects products on major e-commerce platforms and extracts key information like category and weight.</p>
+        </div>
+      </div>
+
+      <div class="feature">
+        <div class="feature-icon">📊</div>
+        <div class="feature-content">
+          <h3>Real-time Carbon Calculation</h3>
+          <p>Get instant carbon footprint calculations for products, including manufacturing, packaging, and delivery emissions.</p>
+        </div>
+      </div>
+
+      <div class="feature">
+        <div class="feature-icon">📝</div>
+        <div class="feature-content">
+          <h3>Shopping History & Analytics</h3>
+          <p>Track all your calculations, view statistics, and understand your environmental impact over time.</p>
+        </div>
+      </div>
+
+      <div class="feature">
+        <div class="feature-icon">💾</div>
+        <div class="feature-content">
+          <h3>Data Export</h3>
+          <p>Export your shopping data and carbon footprint calculations to CSV for further analysis.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="platforms">
+      <h3>🛍️ Supported Platforms</h3>
+      <div class="platform-list">
+        <span class="platform-tag">Global E-Commerce</span>
+        <span class="platform-tag">Online Marketplaces</span>
+        <span class="platform-tag">Shopping Platforms</span>
+      </div>
+    </div>
+
+    <div class="instructions">
+      <h3>🚀 How to Get Started</h3>
+      <ol>
+        <li><strong>Visit any supported shopping site</strong></li>
+        <li><strong>Open a product page</strong> you're interested in purchasing</li>
+        <li><strong>Click the EcoTrace icon</strong> in your browser toolbar</li>
+        <li><strong>View the carbon footprint</strong> calculation instantly!</li>
+        <li><strong>Track your history</strong> and export data anytime from the extension</li>
+      </ol>
+    </div>
+
+    <div class="cta">
+      <a href="https://amazon.com" target="_blank" class="cta-button">
+        Start Shopping Sustainably! 🌍
+      </a>
+    </div>
+
+    <div class="footer">
+      <p><strong>Privacy First:</strong> All data is stored locally on your device. We don't track your browsing or collect personal information.</p>
+      <p style="margin-top: 12px;">Made with 🌱 for a greener future</p>
+    </div>
+  </div>
+</body>
+</html>

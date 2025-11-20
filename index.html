@@ -1,251 +1,343 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EcoCart India: Your Carbon Footprint Calculator</title>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Carbon Footprint Analyzer — E-Commerce Sustainability Platform</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <div class="logo">
-                <i class="fas fa-leaf app-icon"></i>
-                <h1>EcoCart <span class="india-tag">India</span></h1>
-            </div>
-            <p class="tagline">Empowering sustainable choices in online shopping.</p>
-        </header>
-
-        <main class="main-content">
-            <section class="card input-section">
-                <h2><i class="fas fa-shopping-basket"></i> Your Eco-Cart</h2>
-                <div id="cart-items-container">
-                    <div class="cart-item" data-item-id="1">
-                        <div class="input-row">
-                            <div class="input-group">
-                                <label for="product-category-1">Category:</label>
-                                <select id="product-category-1" class="product-category-select">
-                                    <option value="">Select Category</option>
-                                    <option value="electronics">Electronics</option>
-                                    <option value="apparel">Apparel & Footwear</option>
-                                    <option value="books">Books & Media</option>
-                                    <option value="home_goods">Home Goods</option>
-                                </select>
-                            </div>
-                            <div class="input-group">
-                                <label for="product-name-1">Product:</label>
-                                <select id="product-name-1" class="product-name-select" disabled>
-                                    <option value="">Select Product First</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="custom-product-inputs hidden">
-                            <div class="input-row">
-                                <div class="input-group">
-                                    <label for="custom-category-1">Custom Category:</label>
-                                    <input type="text" id="custom-category-1" class="custom-category-input" placeholder="e.g., Handicraft">
-                                </div>
-                                <div class="input-group">
-                                    <label for="custom-name-1">Custom Name:</label>
-                                    <input type="text" id="custom-name-1" class="custom-name-input" placeholder="e.g., Antique Vase">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="input-row">
-                            <div class="input-group">
-                                <label for="quantity-1">Quantity:</label>
-                                <input type="number" id="quantity-1" class="quantity-input" value="1" min="1">
-                            </div>
-                            <div class="input-group checkbox-group">
-                                <input type="checkbox" id="green-product-1" class="green-product-checkbox">
-                                <label for="green-product-1">Green Product/Seller <i class="fas fa-seedling" title="Supplied by eco-friendly brand or seller"></i></label>
-                            </div>
-                        </div>
-                        <button class="remove-item-btn" title="Remove item"><i class="fas fa-trash-alt"></i></button>
-                    </div>
-                </div>
-                <button id="add-item-btn" class="btn btn-secondary"><i class="fas fa-plus-circle"></i> Add Another Item</button>
-
-                <hr>
-
-                <h2><i class="fas fa-route"></i> Delivery Preferences</h2>
-                <div class="input-row">
-                    <div class="input-group">
-                        <label for="origin-warehouse">Origin Warehouse (Simulated):</label>
-                        <select id="origin-warehouse">
-                            <option value="Agra_UP">Agra, UP</option>
-                            <option value="Ahmedabad_GJ">Ahmedabad, GJ</option>
-                            <option value="Amritsar_PB">Amritsar, PB</option>
-                            <option value="Bengaluru_KA">Bengaluru, KA</option>
-                            <option value="Bhopal_MP">Bhopal, MP</option>
-                            <option value="Chennai_TN">Chennai, TN</option>
-                            <option value="Coimbatore_TN">Coimbatore, TN</option>
-                            <option value="Dehradun_UT">Dehradun, UT</option>
-                            <option value="Delhi_DL">Delhi, DL</option>
-                            <option value="Guwahati_AS">Guwahati, AS</option>
-                            <option value="Hyderabad_TS">Hyderabad, TS</option>
-                            <option value="Indore_MP">Indore, MP</option>
-                            <option value="Jaipur_RJ">Jaipur, RJ</option>
-                            <option value="Jamshedpur_JH">Jamshedpur, JH</option>
-                            <option value="Jodhpur_RJ">Jodhpur, RJ</option>
-                            <option value="Kanpur_UP">Kanpur, UP</option>
-                            <option value="Kochi_KL">Kochi, KL</option>
-                            <option value="Kolkata_WB">Kolkata, WB</option>
-                            <option value="Lucknow_UP">Lucknow, UP</option>
-                            <option value="Mumbai_MH">Mumbai, MH</option>
-                            <option value="Mysuru_KA">Mysuru, KA</option>
-                            <option value="Nagpur_MH">Nagpur, MH</option>
-                            <option value="Nashik_MH">Nashik, MH</option>
-                            <option value="Patna_BR">Patna, BR</option>
-                            <option value="Pune_MH">Pune, MH</option>
-                            <option value="Raipur_CG">Raipur, CG</option>
-                            <option value="Ranchi_JH">Ranchi, JH</option>
-                            <option value="Surat_GJ">Surat, GJ</option>
-                            <option value="Thiruvananthapuram_KL">Thiruvananthapuram, KL</option>
-                            <option value="Udaipur_RJ">Udaipur, RJ</option>
-                            <option value="Vadodara_GJ">Vadodara, GJ</option>
-                            <option value="Vijayawada_AP">Vijayawada, AP</option>
-                            <option value="Visakhapatnam_AP">Visakhapatnam, AP</option>
-                        </select>
-                    </div>
-
-                    <div class="input-group">
-                        <label for="destination-location">Your Location (Simulated):</label>
-                        <select id="destination-location">
-                            <option value="Agra_UP">Agra, UP</option>
-                            <option value="Ahmedabad_GJ">Ahmedabad, GJ</option>
-                            <option value="Amritsar_PB">Amritsar, PB</option>
-                            <option value="Bengaluru_KA" selected>Bengaluru, KA</option>
-                            <option value="Bhopal_MP">Bhopal, MP</option>
-                            <option value="Chennai_TN">Chennai, TN</option>
-                            <option value="Coimbatore_TN">Coimbatore, TN</option>
-                            <option value="Dehradun_UT">Dehradun, UT</option>
-                            <option value="Delhi_DL">Delhi, DL</option>
-                            <option value="Guwahati_AS">Guwahati, AS</option>
-                            <option value="Hyderabad_TS">Hyderabad, TS</option>
-                            <option value="Indore_MP">Indore, MP</option>
-                            <option value="Jaipur_RJ">Jaipur, RJ</option>
-                            <option value="Jamshedpur_JH">Jamshedpur, JH</option>
-                            <option value="Jodhpur_RJ">Jodhpur, RJ</option>
-                            <option value="Kanpur_UP">Kanpur, UP</option>
-                            <option value="Kochi_KL">Kochi, KL</option>
-                            <option value="Kolkata_WB">Kolkata, WB</option>
-                            <option value="Lucknow_UP">Lucknow, UP</option>
-                            <option value="Mumbai_MH">Mumbai, MH</option>
-                            <option value="Mysuru_KA">Mysuru, KA</option>
-                            <option value="Nagpur_MH">Nagpur, MH</option>
-                            <option value="Nashik_MH">Nashik, MH</option>
-                            <option value="Patna_BR">Patna, BR</option>
-                            <option value="Pune_MH">Pune, MH</option>
-                            <option value="Raipur_CG">Raipur, CG</option>
-                            <option value="Ranchi_JH">Ranchi, JH</option>
-                            <option value="Surat_GJ">Surat, GJ</option>
-                            <option value="Thiruvananthapuram_KL">Thiruvananthapuram, KL</option>
-                            <option value="Udaipur_RJ">Udaipur, RJ</option>
-                            <option value="Vadodara_GJ">Vadodara, GJ</option>
-                            <option value="Vijayawada_AP">Vijayawada, AP</option>
-                            <option value="Visakhapatnam_AP">Visakhapatnam, AP</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="input-row">
-                    <div class="input-group">
-                        <label for="transport-mode">Shipping Speed/Mode (Long Haul):</label>
-                        <select id="transport-mode">
-                            <option value="road_standard">Standard Road (2-5 days)</option>
-                            <option value="road_express">Express Road (1-2 days)</option>
-                            <option value="air_cargo">Air Cargo (Fastest)</option>
-                            <option value="rail_freight">Rail Freight (Economical)</option>
-                        </select>
-                    </div>
-                    <div class="input-group">
-                        <label for="last-mile-vehicle">Last-Mile Vehicle Type:</label>
-                        <select id="last-mile-vehicle">
-                            <option value="motorcycle">Motorcycle (Bike delivery)</option>
-                            <option value="e_rickshaw">E-Rickshaw/Electric Van</option>
-                            <option value="van">Delivery Van/Car</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="input-row">
-                    <div class="input-group">
-                        <label for="packaging-type">Packaging Preference:</label>
-                        <select id="packaging-type">
-                            <option value="standard">Standard</option>
-                            <option value="minimal">Minimal Packaging</option>
-                            <option value="fragile">Fragile/Extra Protection</option>
-                            <option value="premium">Premium/Gift Packaging</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="input-group checkbox-group">
-                    <input type="checkbox" id="simulate-return">
-                    <label for="simulate-return">Simulate a Product Return (Adds emissions)</label>
-                </div>
-
-                <button id="calculate-btn" class="btn btn-primary"><i class="fas fa-calculator"></i> Calculate Footprint</button>
-            </section>
-
-            <section class="results-container">
-                <section class="card results-section hidden">
-                    <h2><i class="fas fa-chart-pie"></i> Your Eco-Footprint Summary</h2>
-                    <div class="result-summary">
-                        <p>Total Carbon Footprint:</p>
-                        <p class="total-value"><span id="total-footprint">0.00</span> kg CO2eq</p>
-                    </div>
-                    <div class="breakdown-chart">
-                        <canvas id="footprintChart"></canvas>
-                    </div>
-                    <div class="breakdown-list">
-                        <h3>Breakdown:</h3>
-                        <ul>
-                            <li><i class="fas fa-box"></i> Manufacturing: <span id="product-emissions">0.00</span> kg CO2eq</li>
-                            <li><i class="fas fa-plug"></i> Electricity Usage (Electronics): <span id="electricity-emissions">0.00</span> kg CO2eq</li>
-                            <li><i class="fas fa-box-open"></i> Packaging: <span id="packaging-emissions">0.00</span> kg CO2eq</li>
-                            <li><i class="fas fa-truck-moving"></i> Transportation: <span id="transport-emissions">0.00</span> kg CO2eq</li>
-                            <li id="return-emission-item" class="hidden"><i class="fas fa-undo"></i> Product Return: <span id="return-emissions">0.00</span> kg CO2eq</li>
-                            <li><i class="fas fa-recycle"></i> End-of-Life: <span id="eol-emissions">0.00</span> kg CO2eq</li>
-                        </ul>
-                    </div>
-                </section>
-
-                <section class="card context-insights hidden">
-                    <h2><i class="fas fa-lightbulb"></i> What this means in India:</h2>
-                    <p id="context-car"></p>
-                    <p id="context-trees"></p>
-                    <p id="context-electricity"></p>
-                    <p id="context-bus"></p>
-                    <p id="context-offline"></p>
-                </section>
-
-                <section class="card tips-section hidden">
-                    <h2><i class="fas fa-seedling"></i> Tips for a Greener Eco-Cart</h2>
-                    <ul id="green-tips"></ul>
-                </section>
-            </section>
-        </main>
-
-        <footer class="about-section">
-            <h2 class="section-title"><i class="fas fa-info-circle"></i> About Our Methodology</h2>
-            <p>This calculator provides an *estimated* carbon footprint. The actual footprint can vary based on many factors not simulated here (e.g., specific manufacturing processes, vehicle load factors, real-time traffic, renewable energy use in supply chain).</p>
-            <p><strong>Simplified Data Sources:</strong></p>
-            <ul>
-                <li><strong>Product Emissions:</strong> Based on general industry averages for manufacturing and raw material extraction.</li>
-                <li><strong>Electricity Usage:</strong> Estimates CO2 from typical electricity consumption of electronics over their lifespan, using India's average grid emission factor.</li>
-                <li><strong>Packaging:</strong> Estimated based on common materials (cardboard, plastic) and their production emissions.</li>
-                <li><strong>Transportation:</strong> Uses average emission factors for different modes (road, rail, air) per tonne-kilometer, combined with simplified inter-state distances within India. Last-mile delivery is approximated, with options for different vehicle types.</li>
-                <li><strong>Returns:</strong> Assumed to have a carbon cost similar to forward logistics, as products often travel back to warehouses.</li>
-                <li><strong>End-of-Life (EOL):</strong> Simplified estimation of emissions from product disposal, considering recycling or landfill.</li>
-            </ul>
-            <p>Our goal is to raise awareness and encourage conscious online shopping, not to provide an exact scientific measurement. Data points are indicative and simplified for the project scope.</p>
-        </footer>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-brand">
+        <i class="fas fa-leaf"></i>
+        <span>EcoTrace</span>
+      </div>
+      <ul class="nav-menu">
+        <li><a href="#calculator" class="nav-link active">Calculator</a></li>
+        <li><a href="#analytics" class="nav-link">Analytics</a></li>
+        <li><a href="#history" class="nav-link">History</a></li>
+        <li><a href="#compare" class="nav-link">Compare</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button id="themeToggle" class="icon-btn" title="Toggle Dark Mode">
+          <i class="fas fa-moon"></i>
+        </button>
+        <button id="exportBtn" class="icon-btn" title="Export Data">
+          <i class="fas fa-download"></i>
+        </button>
+      </div>
     </div>
-    <div id="toast-container" class="toast-container"></div>
+  </nav>
 
-    <script src="script.js"></script>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1 class="hero-title">Carbon Footprint Analyzer</h1>
+      <p class="hero-subtitle">Calculate, Track, and Reduce Your E-Commerce Environmental Impact</p>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <i class="fas fa-calculator"></i>
+          <div class="stat-value" id="totalCalculations">0</div>
+          <div class="stat-label">Calculations</div>
+        </div>
+        <div class="stat-card">
+          <i class="fas fa-cloud"></i>
+          <div class="stat-value" id="totalEmissions">0</div>
+          <div class="stat-label">kg CO₂e Tracked</div>
+        </div>
+        <div class="stat-card">
+          <i class="fas fa-tree"></i>
+          <div class="stat-value" id="treeEquivalent">0</div>
+          <div class="stat-label">Trees to Offset</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <main class="container">
+    <!-- Browser Extension Section -->
+    <section id="extension" class="section">
+      <div class="section-header">
+        <h2><i class="fas fa-puzzle-piece"></i> Browser Extension</h2>
+        <p>Calculate carbon footprint while shopping online</p>
+      </div>
+
+      <div class="extension-container">
+        <div class="extension-hero">
+          <div class="extension-content">
+            <h3>EcoTrace - Carbon Footprint Analyzer</h3>
+            <p class="extension-description">
+              Seamlessly integrate carbon footprint calculations into your online shopping experience. 
+              Auto-detect products, track emissions, and make informed sustainable choices directly from your browser.
+            </p>
+            
+            <div class="extension-features">
+              <div class="feature-item">
+                <i class="fas fa-magic"></i>
+                <span>Auto-detect product details</span>
+              </div>
+              <div class="feature-item">
+                <i class="fas fa-chart-line"></i>
+                <span>Real-time carbon calculations</span>
+              </div>
+              <div class="feature-item">
+                <i class="fas fa-history"></i>
+                <span>Track purchase history</span>
+              </div>
+              <div class="feature-item">
+                <i class="fas fa-download"></i>
+                <span>Export your data</span>
+              </div>
+            </div>
+
+            <div class="extension-actions">
+              <button class="btn-extension" onclick="downloadExtension()">
+                <i class="fas fa-download"></i> Download Extension <span style="opacity: 0.8; font-size: 0.85rem;">(64 KB)</span>
+              </button>
+              <a href="extension/README.md" class="btn-extension-secondary" target="_blank">
+                <i class="fas fa-book"></i> View Documentation
+              </a>
+            </div>
+
+            <p class="extension-note">
+              <i class="fas fa-info-circle"></i> 
+              Compatible with Chrome, Edge, and other Chromium-based browsers • Free & Open Source
+            </p>
+          </div>
+
+          <div class="extension-preview">
+            <div class="browser-mockup">
+              <div class="browser-bar">
+                <div class="browser-dots">
+                  <span></span><span></span><span></span>
+                </div>
+                <div class="browser-url">chrome://extensions</div>
+              </div>
+              <div class="browser-content">
+                <div class="extension-card-preview">
+                  <div class="ext-icon">
+                    <i class="fas fa-leaf"></i>
+                  </div>
+                  <div class="ext-info">
+                    <h4>EcoTrace</h4>
+                    <p>Carbon Footprint Analyzer</p>
+                    <div class="ext-stats">
+                      <span><i class="fas fa-check-circle"></i> Active</span>
+                      <span><i class="fas fa-shield-alt"></i> Secure</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Calculator Section -->
+    <section id="calculator" class="section">
+      <div class="section-header">
+        <h2><i class="fas fa-calculator"></i> Carbon Calculator</h2>
+        <p>Enter your order details to calculate environmental impact</p>
+      </div>
+
+      <div class="calculator-grid">
+        <!-- Input Form -->
+        <div class="card form-card">
+          <h3 class="card-title">Order Details</h3>
+          <form id="calcForm">
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="category">
+                  <i class="fas fa-box"></i> Product Category
+                </label>
+                <select id="category" required>
+                  <option value="">Select category...</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="weight">
+                  <i class="fas fa-weight"></i> Item Weight (kg)
+                </label>
+                <input id="weight" type="number" step="0.01" min="0" value="0.5" required>
+              </div>
+
+              <div class="form-group">
+                <label for="packaging">
+                  <i class="fas fa-box-open"></i> Packaging Type
+                </label>
+                <select id="packaging" required>
+                  <option value="">Select packaging...</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="distance">
+                  <i class="fas fa-route"></i> Delivery Distance (km)
+                </label>
+                <input id="distance" type="number" step="1" min="0" value="10" required>
+              </div>
+
+              <div class="form-group">
+                <label for="transport">
+                  <i class="fas fa-truck"></i> Transport Mode
+                </label>
+                <select id="transport" required>
+                  <option value="">Select transport...</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="quantity">
+                  <i class="fas fa-hashtag"></i> Quantity
+                </label>
+                <input id="quantity" type="number" step="1" min="1" value="1" required>
+              </div>
+            </div>
+
+            <div class="form-options">
+              <label class="checkbox-label">
+                <input id="consolidate" type="checkbox">
+                <span>Consolidated Delivery (Shared)</span>
+              </label>
+              <label class="checkbox-label">
+                <input id="returnShipment" type="checkbox">
+                <span>Include Return Shipment</span>
+              </label>
+              <label class="checkbox-label">
+                <input id="ecoPackaging" type="checkbox">
+                <span>Eco-friendly Packaging</span>
+              </label>
+            </div>
+
+            <div class="form-group">
+              <label for="orderName">
+                <i class="fas fa-tag"></i> Order Name (Optional)
+              </label>
+              <input id="orderName" type="text" placeholder="e.g., Blue T-shirt from Store X">
+            </div>
+
+            <div class="form-actions">
+              <button type="button" id="calcBtn" class="btn btn-primary">
+                <i class="fas fa-calculator"></i> Calculate Impact
+              </button>
+              <button type="button" id="resetBtn" class="btn btn-secondary">
+                <i class="fas fa-redo"></i> Reset
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Results Panel -->
+        <div class="card result-card">
+          <h3 class="card-title">Environmental Impact</h3>
+          <div id="resultContent">
+            <div class="empty-state">
+              <i class="fas fa-chart-line"></i>
+              <p>Calculate your first order to see results</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Analytics Section -->
+    <section id="analytics" class="section">
+      <div class="section-header">
+        <h2><i class="fas fa-chart-bar"></i> Analytics Dashboard</h2>
+        <p>Visualize your environmental impact over time</p>
+      </div>
+
+      <div class="analytics-grid">
+        <div class="card chart-card">
+          <h3 class="card-title">Emission Breakdown</h3>
+          <canvas id="breakdownChart"></canvas>
+        </div>
+        
+        <div class="card chart-card">
+          <h3 class="card-title">Emissions Over Time</h3>
+          <canvas id="timelineChart"></canvas>
+        </div>
+
+        <div class="card chart-card">
+          <h3 class="card-title">Category Distribution</h3>
+          <canvas id="categoryChart"></canvas>
+        </div>
+
+        <div class="card chart-card">
+          <h3 class="card-title">Transport Mode Impact</h3>
+          <canvas id="transportChart"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <!-- History Section -->
+    <section id="history" class="section">
+      <div class="section-header">
+        <h2><i class="fas fa-history"></i> Calculation History</h2>
+        <div class="header-actions">
+          <button id="clearHistoryBtn" class="btn btn-danger">
+            <i class="fas fa-trash"></i> Clear All
+          </button>
+        </div>
+      </div>
+      <div class="card">
+        <div id="historyTable"></div>
+      </div>
+    </section>
+
+    <!-- Comparison Section -->
+    <section id="compare" class="section">
+      <div class="section-header">
+        <h2><i class="fas fa-balance-scale"></i> Compare Scenarios</h2>
+        <p>Compare different delivery options and their environmental impact</p>
+      </div>
+      <div class="card">
+        <div id="comparisonContent">
+          <div class="comparison-grid" id="comparisonGrid"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Recommendations Section -->
+    <section class="section">
+      <div class="card recommendations-card">
+        <h3 class="card-title"><i class="fas fa-lightbulb"></i> Sustainability Recommendations</h3>
+        <div id="recommendations" class="recommendations-grid"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h4><i class="fas fa-leaf"></i> EcoTrace</h4>
+        <p>Professional carbon footprint analysis for e-commerce sustainability</p>
+      </div>
+      <div class="footer-section">
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="#"><i class="fas fa-book"></i> Documentation</a></li>
+          <li><a href="#"><i class="fas fa-database"></i> Emission Factors</a></li>
+          <li><a href="#"><i class="fas fa-chart-line"></i> Methodology</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>About</h4>
+        <p class="footer-note">Advanced Carbon Footprint Analysis System — Professional E-Commerce Sustainability Platform</p>
+        <p class="footer-note">Data sources: DEFRA, GLEC Framework, Ecoinvent Database</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script src="extension-download.js"></script>
 </body>
 </html>

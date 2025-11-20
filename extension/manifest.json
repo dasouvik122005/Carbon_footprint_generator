@@ -1,0 +1,53 @@
+{
+  "manifest_version": 3,
+  "name": "EcoTrace - Carbon Footprint Analyzer",
+  "version": "1.0.0",
+  "description": "Calculate and track carbon footprint of your online shopping across all e-commerce platforms",
+  "permissions": [
+    "storage",
+    "tabs",
+    "activeTab",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://*/*",
+    "http://*/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "48": "icons/icon-48.png",
+      "128": "icons/icon-128.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.amazon.com/*",
+        "https://*.amazon.in/*",
+        "https://*.flipkart.com/*",
+        "https://*.ebay.com/*",
+        "https://*.walmart.com/*",
+        "https://*.aliexpress.com/*",
+        "https://*.etsy.com/*",
+        "https://*.shopify.com/*"
+      ],
+      "js": ["content.js"]
+    }
+  ],
+  "icons": {
+    "16": "icons/icon-16.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["popup.html", "icons/*"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}
