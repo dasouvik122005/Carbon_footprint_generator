@@ -3,8 +3,10 @@ function downloadExtension() {
   // For GitHub Pages: direct download of the ZIP file
   // For local/backend: use Flask route
   const isGitHubPages = window.location.hostname.includes('github.io');
+  
+  // GitHub Pages needs the full repo path
   const downloadUrl = isGitHubPages 
-    ? 'ecotrace-extension.zip'  // Direct file on GitHub Pages
+    ? '/Carbon_footprint_generator/ecotrace-extension.zip'  // Full path for GitHub Pages
     : '/download/extension';     // Flask route for local hosting
   
   // Create temporary link and trigger download
