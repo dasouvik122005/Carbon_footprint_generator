@@ -1,28 +1,22 @@
 // Download Extension Function
 function downloadExtension() {
-  // Detect if running locally (with Flask backend) or on deployed site
-  const isLocal = window.location.hostname === 'localhost' || 
-                  window.location.hostname === '127.0.0.1' ||
-                  window.location.port === '5000';
+  // Use window.location.origin to get the base URL
+  // This works for all scenarios: localhost, GitHub Pages, custom domains
+  const baseUrl = window.location.origin;
+  const pathname = window.location.pathname.replace(/\/$/, ''); // Remove trailing slash
   
-  // For deployed sites (GitHub Pages or custom domain): use full path
-  // For local Flask server: use backend route
-  const downloadUrl = isLocal 
-    ? '/download/extension'     // Flask route for local hosting
-    : '/Carbon_footprint_generator/ecotrace-extension.zip';  // Full path for deployed sites
+  // Construct the full download URL
+  const downloadUrl = `${baseUrl}${pathname}/ecotrace-extension.zip`;
   
-  // Create temporary link and trigger download
-  const link = document.createElement('a');
-  link.href = downloadUrl;
-  link.download = 'ecotrace-extension.zip';
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
+  console.log('Download URL:', downloadUrl); // Debug log
+  
+  // Try direct window.location approach for better compatibility
+  window.location.href = downloadUrl;
   
   // Show installation instructions after download starts
   setTimeout(() => {
     showInstallInstructions();
-  }, 500);
+  }, 1000);
 }
 
 function showInstallInstructions() {
