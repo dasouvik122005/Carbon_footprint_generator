@@ -305,7 +305,7 @@ This project is created for educational and commercial purposes.
 
 ---
 
-## 👨‍💻 Author
+## 👨‍💻 Project Details
 
 - Project: Carbon Footprint Generator
 - Year: 2025
