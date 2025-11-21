@@ -182,9 +182,18 @@
 
               <div class="form-group">
                 <label for="distance">
-                  <i class="fas fa-route"></i> Delivery Distance (km)
+                  <i class="fas fa-route"></i> Delivery Distance
                 </label>
+                <select id="distanceType" class="distance-selector">
+                  <option value="custom">Custom Distance (km)</option>
+                  <option value="local">Local (5-20 km)</option>
+                  <option value="city">Same City (20-50 km)</option>
+                  <option value="regional">Regional (50-200 km)</option>
+                  <option value="national">National (200-1000 km)</option>
+                  <option value="international">International (1000+ km)</option>
+                </select>
                 <input id="distance" type="number" step="1" min="0" value="10" required>
+                <small class="distance-hint">Average: <span id="distanceHint">10 km</span></small>
               </div>
 
               <div class="form-group">

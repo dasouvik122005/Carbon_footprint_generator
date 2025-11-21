@@ -48,6 +48,16 @@ let appState = {
   charts: {}
 };
 
+// Distance Estimation Ranges
+const DISTANCE_RANGES = {
+  'custom': { min: 0, max: 0, avg: 10, description: 'Enter your own distance' },
+  'local': { min: 5, max: 20, avg: 12, description: 'Local delivery within neighborhood' },
+  'city': { min: 20, max: 50, avg: 35, description: 'Same city or metropolitan area' },
+  'regional': { min: 50, max: 200, avg: 125, description: 'Regional delivery (nearby cities)' },
+  'national': { min: 200, max: 1000, avg: 500, description: 'National delivery (cross-country)' },
+  'international': { min: 1000, max: 5000, avg: 2500, description: 'International shipping' }
+};
+
 // DOM Elements
 const elements = {
   // Form inputs
@@ -55,6 +65,8 @@ const elements = {
   weight: document.getElementById('weight'),
   packaging: document.getElementById('packaging'),
   distance: document.getElementById('distance'),
+  distanceType: document.getElementById('distanceType'),
+  distanceHint: document.getElementById('distanceHint'),
   transport: document.getElementById('transport'),
   quantity: document.getElementById('quantity'),
   consolidate: document.getElementById('consolidate'),
@@ -744,6 +756,11 @@ function attachEventListeners() {
   elements.exportBtn.addEventListener('click', exportData);
   elements.clearHistoryBtn.addEventListener('click', clearHistory);
   
+  // Distance type selector
+  if (elements.distanceType) {
+    elements.distanceType.addEventListener('change', updateDistanceFromType);
+  }
+  
   // Navigation smooth scroll
   document.querySelectorAll('.nav-link').forEach(link => {
     link.addEventListener('click', (e) => {
@@ -758,6 +775,22 @@ function attachEventListeners() {
       }
     });
   });
+}
+
+// Update Distance Based on Selected Type
+function updateDistanceFromType() {
+  const type = elements.distanceType.value;
+  const range = DISTANCE_RANGES[type];
+  
+  if (type === 'custom') {
+    elements.distance.disabled = false;
+    elements.distance.focus();
+    elements.distanceHint.textContent = 'Enter your distance';
+  } else {
+    elements.distance.disabled = false; // Allow manual adjustment
+    elements.distance.value = range.avg;
+    elements.distanceHint.textContent = `${range.description} (${range.min}-${range.max} km, avg: ${range.avg} km)`;
+  }
 }
 
 // Initialize on DOM Load

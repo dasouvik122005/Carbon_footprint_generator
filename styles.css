@@ -394,6 +394,24 @@ h4 { font-size: 1.25rem; }
   width: 16px;
 }
 
+/* Distance Selector Styles */
+.distance-selector {
+  margin-bottom: var(--spacing-sm);
+}
+
+.distance-hint {
+  display: block;
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  margin-top: var(--spacing-xs);
+  font-style: italic;
+}
+
+.distance-hint span {
+  color: var(--primary);
+  font-weight: 600;
+}
+
 input[type="text"],
 input[type="number"],
 select,
