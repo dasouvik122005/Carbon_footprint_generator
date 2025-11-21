@@ -1,16 +1,14 @@
 // Content script for extracting product data from e-commerce sites
 // Prevent duplicate injection
 if (window.ecoTraceContentLoaded) {
-  console.log('EcoTrace content script already loaded');
+  // Already loaded, exit
 } else {
   window.ecoTraceContentLoaded = true;
-  console.log('EcoTrace content script loaded');
 }
 
 // Product data extraction functions for different platforms
 const extractors = {
   amazon: () => {
-    console.log('Extracting product data from e-commerce site');
     const name = document.querySelector('#productTitle')?.textContent.trim();
     const price = document.querySelector('.a-price .a-offscreen')?.textContent;
     
@@ -21,8 +19,6 @@ const extractors = {
                    document.querySelector('.a-breadcrumb a')?.textContent;
     
     const weight = extractWeight(document.body.textContent);
-    
-    console.log('Product data:', result);
     
     return { name, price, category: mapCategory(category), weight };
   },
@@ -174,10 +170,8 @@ function detectPlatform() {
 // Extract product data
 function extractProductData() {
   const platform = detectPlatform();
-  console.log('Detected platform:', platform);
   
   if (!platform || !extractors[platform]) {
-    console.log('No extractor available for this platform');
     return null;
   }
   
@@ -185,7 +179,6 @@ function extractProductData() {
     const data = extractors[platform]();
     
     if (!data) {
-      console.log('Extractor returned null');
       return null;
     }
     
@@ -212,20 +205,16 @@ function extractProductData() {
       data.weightEstimated = true;
     }
     
-    console.log('Extracted product data:', data);
     return data;
   } catch (error) {
-    console.error('Error extracting product data:', error);
     return null;
   }
 }
 
 // Listen for messages from popup
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  console.log('Content script received message:', request);
   if (request.action === 'getProductData') {
     const productData = extractProductData();
-    console.log('Sending product data:', productData);
     sendResponse({ product: productData });
   }
   return true;

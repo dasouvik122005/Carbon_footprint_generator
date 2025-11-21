@@ -8,8 +8,6 @@ function downloadExtension() {
   // Construct the full download URL
   const downloadUrl = `${baseUrl}${pathname}/ecotrace-extension.zip`;
   
-  console.log('Download URL:', downloadUrl); // Debug log
-  
   // Try direct window.location approach for better compatibility
   window.location.href = downloadUrl;
   

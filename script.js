@@ -102,7 +102,6 @@ function init() {
   attachEventListeners();
   initCharts();
   showComparison();
-  console.log('🌱 EcoTrace Carbon Footprint Analyzer initialized');
 }
 
 // Populate Select Dropdowns
@@ -799,7 +798,3 @@ if (document.readyState === 'loading') {
 } else {
   init();
 }
-
-console.log('📊 Emission Factors Version:', EMISSION_FACTORS.version);
-console.log('📅 Last Updated:', EMISSION_FACTORS.updated);
-console.log('📚 Sources:', EMISSION_FACTORS.sources.join(', '));

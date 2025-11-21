@@ -3,8 +3,6 @@
 // Installation listener
 chrome.runtime.onInstalled.addListener((details) => {
   if (details.reason === 'install') {
-    console.log('EcoTrace extension installed');
-    
     // Initialize storage
     chrome.storage.local.set({
       calculations: [],
@@ -15,8 +13,6 @@ chrome.runtime.onInstalled.addListener((details) => {
         defaultDistance: 50
       }
     });
-  } else if (details.reason === 'update') {
-    console.log('EcoTrace extension updated');
   }
 });
 
@@ -138,43 +134,3 @@ chrome.storage.onChanged.addListener((changes, namespace) => {
 
 // Initialize badge
 updateBadge();
-
-// Analytics tracking (anonymous usage statistics)
-async function trackUsage(eventName, data = {}) {
-  const settings = await getSettings();
-  
-  if (settings.analyticsEnabled === false) {
-    return;
-  }
-  
-  // Track anonymous usage for improving the extension
-  console.log('Analytics event:', eventName, data);
-}
-
-// Listen for tab updates to detect shopping sites
-chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-  if (changeInfo.status === 'complete' && tab.url) {
-    try {
-      const url = new URL(tab.url);
-      const hostname = url.hostname.toLowerCase();
-      
-      const shoppingSites = ['amazon', 'flipkart', 'ebay', 'walmart', 'aliexpress', 'etsy', 'shopify'];
-      const isShoppingSite = shoppingSites.some(site => hostname.includes(site));
-      
-      if (isShoppingSite) {
-        trackUsage('shopping_site_detected', { platform: hostname });
-      }
-    } catch (error) {
-      // Silently ignore URL parsing errors
-    }
-  }
-});
-
-// Make export function available to other components
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  if (request.action === 'exportToBackend') {
-    // Simplified - just acknowledge
-    sendResponse({ success: false, message: 'Backend export not configured' });
-  }
-  return true;
-});

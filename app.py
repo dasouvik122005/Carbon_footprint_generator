@@ -49,18 +49,6 @@ def init_db():
         )
     ''')
     
-    # Create analytics summary table
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS analytics_summary (
-            date TEXT PRIMARY KEY,
-            total_calculations INTEGER DEFAULT 0,
-            total_emissions REAL DEFAULT 0,
-            avg_emission REAL DEFAULT 0,
-            categories TEXT,
-            transport_modes TEXT
-        )
-    ''')
-    
     conn.commit()
     conn.close()
     print("✅ Database initialized")
@@ -97,29 +85,6 @@ def download_extension():
 def static_files(filename):
     """Serve static files (CSS, JS, etc.)"""
     return send_from_directory('.', filename)
-
-@app.route('/api/calculate', methods=['POST'])
-def calculate():
-    """
-    Calculate carbon footprint
-    Returns calculation result without saving
-    """
-    data = request.get_json()
-    
-    if not data:
-        return jsonify({'error': 'No data provided'}), 400
-    
-    # Validate required fields
-    required = ['category', 'weight', 'packaging', 'distance', 'transport']
-    missing = [field for field in required if field not in data.get('inputs', {})]
-    
-    if missing:
-        return jsonify({'error': f'Missing fields: {", ".join(missing)}'}), 400
-    
-    return jsonify({
-        'status': 'success',
-        'result': data.get('result', {})
-    }), 200
 
 @app.route('/api/save', methods=['POST'])
 def save():

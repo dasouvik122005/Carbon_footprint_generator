@@ -27,6 +27,16 @@ const EMISSION_FACTORS = {
   }
 };
 
+// Distance Estimation Ranges
+const DISTANCE_RANGES = {
+  'custom': { min: 0, max: 0, avg: 10, description: 'Enter your own distance' },
+  'local': { min: 5, max: 20, avg: 12, description: 'Local delivery within neighborhood' },
+  'city': { min: 20, max: 50, avg: 35, description: 'Same city or metropolitan area' },
+  'regional': { min: 50, max: 200, avg: 125, description: 'Regional delivery (nearby cities)' },
+  'national': { min: 200, max: 1000, avg: 500, description: 'National delivery (cross-country)' },
+  'international': { min: 1000, max: 5000, avg: 2500, description: 'International shipping' }
+};
+
 // Application state
 let calculations = [];
 
@@ -53,6 +63,9 @@ function setupEventListeners() {
 
   // Export button
   document.getElementById('exportBtn').addEventListener('click', exportData);
+  
+  // Distance type selector
+  document.getElementById('distanceType').addEventListener('change', updateDistanceFromType);
 }
 
 // Switch tabs
@@ -85,7 +98,6 @@ async function checkCurrentPage() {
         chrome.tabs.sendMessage(tab.id, { action: 'getProductData' }, (response) => {
           if (chrome.runtime.lastError) {
             // Content script not loaded, inject it
-            console.log('Injecting content script...');
             chrome.scripting.executeScript({
               target: { tabId: tab.id },
               files: ['content.js']
@@ -94,7 +106,6 @@ async function checkCurrentPage() {
               setTimeout(() => {
                 chrome.tabs.sendMessage(tab.id, { action: 'getProductData' }, (response) => {
                   if (chrome.runtime.lastError) {
-                    console.log('Could not get product data:', chrome.runtime.lastError.message);
                     return;
                   }
                   if (response && response.product) {
@@ -103,7 +114,7 @@ async function checkCurrentPage() {
                 });
               }, 200);
             }).catch(e => {
-              console.log('Could not inject content script:', e.message);
+              // Silently handle injection errors
             });
           } else if (response && response.product) {
             displayCurrentProduct(response.product);
@@ -331,4 +342,24 @@ function getTransportName(transport) {
     ship: 'Ship'
   };
   return names[transport] || transport;
+}
+
+// Update Distance Based on Selected Type
+function updateDistanceFromType() {
+  const distanceType = document.getElementById('distanceType');
+  const distanceInput = document.getElementById('distance');
+  const distanceHint = document.getElementById('distanceHint');
+  
+  const type = distanceType.value;
+  const range = DISTANCE_RANGES[type];
+  
+  if (type === 'custom') {
+    distanceInput.disabled = false;
+    distanceInput.focus();
+    distanceHint.textContent = 'Enter your distance';
+  } else {
+    distanceInput.disabled = false; // Allow manual adjustment
+    distanceInput.value = range.avg;
+    distanceHint.textContent = `${range.description} (${range.min}-${range.max} km, avg: ${range.avg} km)`;
+  }
 }
