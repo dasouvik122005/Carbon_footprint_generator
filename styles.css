@@ -68,6 +68,22 @@
   --gradient-card: linear-gradient(145deg, rgba(31,41,55,0.9), rgba(31,41,55,0.7));
 }
 
+[data-theme="dark"] .extension-card-preview {
+  background: var(--bg-secondary);
+}
+
+[data-theme="dark"] .browser-content {
+  background: var(--bg-primary);
+}
+
+[data-theme="dark"] .ext-info h4 {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .ext-info p {
+  color: var(--text-secondary);
+}
+
 /* Reset & Base Styles */
 * {
   margin: 0;
