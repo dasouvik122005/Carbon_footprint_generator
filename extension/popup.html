@@ -298,6 +298,110 @@
       width: 16px;
       height: 16px;
     }
+
+    /* Dark Mode Support */
+    @media (prefers-color-scheme: dark) {
+      body {
+        background: linear-gradient(135deg, #1e293b 0%, #334155 50%, #475569 100%);
+        color: #f1f5f9;
+      }
+
+      .header {
+        background: rgba(30, 41, 59, 0.95);
+        border-bottom: 2px solid #10b981;
+      }
+
+      .header h1 {
+        color: #10b981;
+      }
+
+      .header p {
+        color: #cbd5e1;
+      }
+
+      .container {
+        background: #1e293b;
+        color: #f1f5f9;
+      }
+
+      .current-product {
+        background: #334155;
+        color: #f1f5f9;
+      }
+
+      .current-product h3 {
+        color: #f1f5f9;
+      }
+
+      .product-info {
+        color: #cbd5e1;
+      }
+
+      .breakdown {
+        background: #334155;
+      }
+
+      .breakdown-label {
+        color: #e2e8f0;
+      }
+
+      .stat-card {
+        background: #334155;
+      }
+
+      .stat-label {
+        color: #cbd5e1;
+      }
+
+      .history-item {
+        background: #334155;
+      }
+
+      .history-name {
+        color: #f1f5f9;
+      }
+
+      .history-details {
+        color: #cbd5e1;
+      }
+
+      .tabs {
+        border-bottom: 2px solid #475569;
+      }
+
+      .tab {
+        color: #94a3b8;
+      }
+
+      .tab.active {
+        color: #10b981;
+      }
+
+      .form-group label {
+        color: #f1f5f9;
+      }
+
+      .form-group input,
+      .form-group select {
+        background: #334155;
+        border: 2px solid #475569;
+        color: #f1f5f9;
+      }
+
+      .form-group input:focus,
+      .form-group select:focus {
+        border-color: #10b981;
+        background: #1e293b;
+      }
+
+      .distance-hint {
+        color: #cbd5e1;
+      }
+
+      .empty-state {
+        color: #64748b;
+      }
+    }
   </style>
 </head>
 <body>
